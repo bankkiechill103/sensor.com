@@ -95,8 +95,12 @@ $(document).ready(function() {
         $(".f3").html("LMax");
         $(".f4").html("L90");
       }else{
+        if(id == 9 || id == 11){
+          $(".f3").html("PM 2.5");
+        }else{
+          $(".f3").html("PM 10");
+        }
         $(".f2").html("Min");
-        $(".f3").html("ค่าตรวจวัด");
         $(".f4").html("Max");
       }
     }else if(id == 2){
@@ -115,32 +119,32 @@ $(document).ready(function() {
         $(".f2").html("Frequency X");
         $(".f3").html("Vibration Reference X");
         $(".f4").html("Vibration X");
-        $(".f5").html("Result");
+        $(".f5").html("Result X");
       }else if(id == 6){
         $(".f2").html("Frequency Y");
         $(".f3").html("Vibration Reference Y");
         $(".f4").html("Vibration Y");
-        $(".f5").html("Result");
+        $(".f5").html("Result Y");
       }else{
         $(".f2").html("Frequency z");
         $(".f3").html("Vibration Reference Z");
         $(".f4").html("Vibration z");
-        $(".f5").html("Result");
+        $(".f5").html("Result Z");
       }
     }else if(id == 8){
       table.columns( [0,1,2,3,4,5,6,7,8,9,10,11,12] ).visible( true );
       $(".f2").html("Frequency X");
       $(".f3").html("Vibration Reference X");
       $(".f4").html("Vibration X");
-      $(".f5").html("Result");
+      $(".f5").html("Result X");
       $(".f6").html("Frequency Y");
       $(".f7").html("Vibration Reference Y");
       $(".f8").html("Vibration Y");
-      $(".f9").html("Result");
+      $(".f9").html("Result Y");
       $(".f10").html("Frequency Z");
       $(".f11").html("Vibration ReferenceZ");
       $(".f12").html("Vibration Z");
-      $(".f13").html("Result");
+      $(".f13").html("Result Z");
     }
   });
 });

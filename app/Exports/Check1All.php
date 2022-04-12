@@ -65,15 +65,19 @@ class Check1All implements FromCollection, WithTitle, WithHeadings
       }elseif($this->type == 3){
         $header = [$nametype."_เวลา", $nametype."_LDN"];
       }elseif($this->type == 5){
-        $header = [$nametype."_เวลา", $nametype."_Frequency X", $nametype."_Vibration Reference X", $nametype."_Vibration X", "Result"];
+        $header = [$nametype."_เวลา", $nametype."_Frequency X", $nametype."_Vibration Reference X", $nametype."_Vibration X", "Result X"];
       }elseif($this->type == 6){
-        $header = [$nametype."_เวลา", $nametype."_Frequency Y", $nametype."_Vibration Reference Y", $nametype."_Vibration Y", "Result"];
+        $header = [$nametype."_เวลา", $nametype."_Frequency Y", $nametype."_Vibration Reference Y", $nametype."_Vibration Y", "Result Y"];
       }elseif($this->type == 7){
-        $header = [$nametype."_เวลา", $nametype."_Frequency Z", $nametype."_Vibration Reference Z", $nametype."_Vibration Z", "Result"];
+        $header = [$nametype."_เวลา", $nametype."_Frequency Z", $nametype."_Vibration Reference Z", $nametype."_Vibration Z", "Result Z"];
       }elseif($this->type == 8){
-        $header = [$nametype."_เวลา", $nametype."_Frequency X", $nametype."_Vibration Reference X", $nametype."_Vibration X", $nametype."_Result", $nametype."_Frequency Y", $nametype."_Vibration Reference Y", $nametype."_Vibration Y", $nametype."_Result", $nametype."_Frequency Z", $nametype."_Vibration Reference Z", $nametype."_Vibration Z", $nametype."_Result"];
+        $header = [$nametype."_เวลา", $nametype."_Frequency X", $nametype."_Vibration Reference X", $nametype."_Vibration X", $nametype."_Result X", $nametype."_Frequency Y", $nametype."_Vibration Reference Y", $nametype."_Vibration Y", $nametype."_Result Y", $nametype."_Frequency Z", $nametype."_Vibration Reference Z", $nametype."_Vibration Z", $nametype."_Result Z"];
       }else{
-        $header = [$nametype."_เวลา", $nametype."_Min", $nametype."_ค่าตรวจวัด", $nametype."_Max"];
+        if($this->type == 9 || $this->type == 11){
+          $header = [$nametype."_เวลา", $nametype."_Min", $nametype."_PM 2.5", $nametype."_Max"];
+        }else{
+          $header = [$nametype."_เวลา", $nametype."_Min", $nametype."_PM 10", $nametype."_Max"];
+        }
       }
       return $header;
     }

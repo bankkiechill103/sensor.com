@@ -1,4 +1,29 @@
 <?php
+function getcolorgreen()
+{
+  return "rgb(65, 158, 0)";
+}
+function getcoloror()
+{
+  return "rgb(244, 163, 56)";
+}
+function getcolorblue()
+{
+  return "rgb(0, 194, 207)";
+}
+function getcolorred()
+{
+  return "rgb(244, 56, 56)";
+}
+function style_line($nameType, $data, $color = null)
+{
+  if(is_null($color)){
+    $line = ["name" => $nameType, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data,  "smooth" => true];
+  }else{
+    $line = ["name" => $nameType, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data,  "smooth" => true, "itemStyle" =>["color" => $color]];
+  }
+  return $line;
+}
 function DateThai($strDate, $type = 0)
 {
   if($type == 3){

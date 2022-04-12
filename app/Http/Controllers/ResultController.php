@@ -198,9 +198,9 @@ class ResultController extends Controller
         $dataname3 = "L90";
         $namelimit = $dataname1;
         $namey = "ระดับค่าตรวจวัด (dB A)";
-        $data1 = ["name" => $dataname1, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data1, "smooth" => true];
-        $data2 = ["name" => $dataname2, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data2, "smooth" => true];
-        $data3 = ["name" => $dataname3, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data3, "smooth" => true];
+        $data1 = style_line($dataname1, $data1, getcolorgreen());
+        $data2 = style_line($dataname2, $data2, getcoloror());
+        $data3 = style_line($dataname3, $data3, getcolorblue());
         array_push($data, $data1);
         array_push($data, $data2);
         array_push($data, $data3);
@@ -215,7 +215,7 @@ class ResultController extends Controller
         }
         $namey = "ระดับค่าตรวจวัด (ไมโครกรัม / ลูกบาศก์เมตร)";
         $data1 = ["name" => $dataname1, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data1, "smooth" => true];
-        $data2 = ["name" => $dataname2, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data2, "smooth" => true];
+        $data2 = style_line($namelimit, $data2, getcolorgreen());
         $data3 = ["name" => $dataname3, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data3, "smooth" => true];
         array_push($data, $data2);
       }
@@ -236,8 +236,8 @@ class ResultController extends Controller
         array_push($data_LMax, $value->f3);
         array_push($data_limit, $limit);
       }
-      $fdata_LAEQ = ["name" => "LAeq", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data_LAEQ,  "smooth" => true];
-      $data_LMax = ["name" => "LMax", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data_LMax,  "smooth" => true];
+      $fdata_LAEQ = style_line("LAeq", $data_LAEQ, getcolorgreen());
+      $data_LMax = style_line("LMax", $data_LMax, getcoloror());
       $data_def = getLimitLine($limit, $data_limit, "LAeq");
       $data = [];
       array_push($data, $fdata_LAEQ);
@@ -256,7 +256,7 @@ class ResultController extends Controller
         array_push($data_LAEQ, $value->f2);
         array_push($data_limit, $limit);
       }
-      $fdata_LAEQ = ["name" => "LDN", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data_LAEQ,  "smooth" => true];
+      $fdata_LAEQ = style_line("LDN", $data_LAEQ, getcolorgreen());
       $data_def = getLimitLine($limit, $data_limit, "LAeq");
       $data = [];
       array_push($data, $fdata_LAEQ);
@@ -285,9 +285,9 @@ class ResultController extends Controller
       }else{
         $nameType = "Z";
       }
-      $data1 = ["name" => "Frequency ".$nameType, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data1,  "smooth" => true];
-      $data2 = ["name" => "Vibration Reference ".$nameType, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data2,  "smooth" => true, "itemStyle" =>["color" => "rgb(244, 56, 56)"]];
-      $data3 = ["name" => "Vibration ".$nameType, "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data3,  "smooth" => true];
+      $data1 = style_line("Frequency ".$nameType, $data1, getcolorblue());
+      $data2 = style_line("Vibration Reference ".$nameType, $data2, getcolorred());
+      $data3 = style_line("Vibration ".$nameType, $data3, getcolorgreen());
       $data = [];
       array_push($data, $data1);
       array_push($data, $data2);
@@ -322,15 +322,15 @@ class ResultController extends Controller
         array_push($data9, $value->f12);
         array_push($data_limit, $limit);
       }
-      $data1 = ["name" => "F X", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data1,  "smooth" => true];
-      $data2 = ["name" => "V-R X", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data2,  "smooth" => true, "itemStyle" =>["color" => "rgb(244, 56, 56)"]];
-      $data3 = ["name" => "V X", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data3,  "smooth" => true];
-      $data4 = ["name" => "F Y", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data4,  "smooth" => true];
-      $data5 = ["name" => "V-R Y", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data5, "smooth" => true, "itemStyle" =>["color" => "rgb(244, 56, 56)"]];
-      $data6 = ["name" => "V Y", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data6,  "smooth" => true];
-      $data7 = ["name" => "F Z", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data7,  "smooth" => true];
-      $data8 = ["name" => "V-R Z", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data8,  "smooth" => true, "itemStyle" =>["color" => "rgb(244, 56, 56)"]];
-      $data9 = ["name" => "V Z", "symbolSize" => 10, "symbol" => "circle", "type" => "line", "data" => $data9,  "smooth" => true];
+      $data1 = style_line("Frequency X", $data1, getcolorblue());
+      $data2 = style_line("Vibration Reference X", $data2, getcolorred());
+      $data3 = style_line("Vibration X", $data3, getcolorgreen());
+      $data4 = style_line("Frequency Y", $data4, getcolorblue());
+      $data5 = style_line("Vibration Reference Y", $data5, getcolorred());
+      $data6 = style_line("Vibration Y", $data6, getcolorgreen());
+      $data7 = style_line("Frequency Z", $data7, getcolorblue());
+      $data8 = style_line("Vibration Reference Z", $data8, getcolorred());
+      $data9 = style_line("Vibration Z", $data9, getcolorgreen());
       // $data_def = getLimitLine($data_limit);
       $data_set1 = [];
       $data_set2 = [];
