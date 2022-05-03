@@ -11,6 +11,9 @@
       <div class="row mt-3">
         <div class="col-12 col-md-6">
           <div class="form-group">
+            <label for="id">
+              <h4>จุดตรวจวัด</h4>
+            </label>
             <select class="form-control selectmain" name="id" id="id">
               @foreach (getnameid() as $key => $value)
                 <option @if($key == 1) selected @endif value="{{ $key }}">{{ $value }}</option>
@@ -20,6 +23,9 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="form-group">
+            <label for="type">
+              <h4>พารามิเตอร์</h4>
+            </label>
             <select class="form-control select1 reload_data" name="type" id="type">
               @foreach (getnamemain() as $key => $value)
                 <option @if($key == 1) selected @endif value="{{ $key }}">{{ $value }}</option>
@@ -57,7 +63,12 @@
         <h4><i class="fa-solid fa-chart-line"></i> กราฟข้อมูลตรวจวัด</h4>
       </div>
       <div class="col-12 col-md-6 text-right">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-file-export"></i> ส่งออก</button>
+        <button type="button" class="btn btn-primary export_btn" data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-file-export"></i> ส่งออก</button>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12">
+        <div id="result" style="width:100%; height: 500px; "></div>
       </div>
     </div>
     <div class="row mt-5">

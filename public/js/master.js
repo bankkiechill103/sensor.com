@@ -60,8 +60,24 @@ $(document).ready(function() {
     reload_graft();
     table.ajax.reload(null, false);
   });
+  table.columns( [ 4,5,6,7,8,9,10,11,12 ] ).visible( false );
   $(".selectmain").change(function(event) {
-    $(".select1").val(1);
+    id = $(this).val();
+    select1 = $(".select1").val();
+    if(id == 3 || id == 4 || id == 5){
+      $(".select1 option[value=5]").hide();
+      $(".select1 option[value=6]").hide();
+      $(".select1 option[value=7]").hide();
+      $(".select1 option[value=8]").hide();
+      if(select1 == 5 || select1 == 6 || select1 == 7 || select1 == 8){
+        $(".select1").val(1);
+      }
+    }else{
+      $(".select1 option[value=5]").show();
+      $(".select1 option[value=6]").show();
+      $(".select1 option[value=7]").show();
+      $(".select1 option[value=8]").show();
+    }
     table.columns( [0,1,2,3] ).visible( true );
     table.columns( [4,5,6,7,8,9,10,11,12] ).visible( false );
     $(".f2").html("LAeq");
@@ -69,21 +85,6 @@ $(document).ready(function() {
     $(".f4").html("L90");
     reload_graft();
     table.ajax.reload(null, false);
-  });
-  table.columns( [ 4,5,6,7,8,9,10,11,12 ] ).visible( false );
-  $(".selectmain").change(function(event) {
-    id = $(this).val();
-    if(id == 3 || id == 4 || id == 5){
-      $(".select1 option[value=5]").hide();
-      $(".select1 option[value=6]").hide();
-      $(".select1 option[value=7]").hide();
-      $(".select1 option[value=8]").hide();
-    }else{
-      $(".select1 option[value=5]").show();
-      $(".select1 option[value=6]").show();
-      $(".select1 option[value=7]").show();
-      $(".select1 option[value=8]").show();
-    }
   });
   $(".select1").change(function(event) {
     id = $(this).val();
@@ -167,33 +168,33 @@ function reload_graft() {
     if(re.status == 1){
       if($('#type').val() == 2){
         $("#chart_sensor1").show();
-        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey, $('#type').val());
         myChart1.setOption(option);
       }else if($('#type').val() == 3){
         $("#chart_sensor2").show();
-        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey, $('#type').val());
         myChart2.setOption(option);
       }else if($('#type').val() == 5 || $('#type').val() == 6 || $('#type').val() == 7){
         $("#chart_sensor3").show();
-        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey, $('#type').val());
         myChart3.setOption(option);
       }else if($('#type').val() == 8){
         $("#chart_sensor4").show();
         $("#chart_sensor6").show();
         $("#chart_sensor7").show();
-        option = setOptionCharts(re.data_g1, re.data_under, re.title1, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g1, re.data_under, re.title1, start_date, end_date, re.namey, $('#type').val());
         myChart4.setOption(option);
-        option = setOptionCharts(re.data_g2, re.data_under, re.title2, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g2, re.data_under, re.title2, start_date, end_date, re.namey, $('#type').val());
         myChart6.setOption(option);
-        option = setOptionCharts(re.data_g3, re.data_under, re.title3, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g3, re.data_under, re.title3, start_date, end_date, re.namey, $('#type').val());
         myChart7.setOption(option);
       }else if($('#type').val() == 9 || $('#type').val() == 10 || $('#type').val() == 11 || $('#type').val() == 12){
         $("#chart_sensor5").show();
-        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey, $('#type').val());
         myChart5.setOption(option);
       }else{
         $("#chart_sensor").show();
-        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey);
+        option = setOptionCharts(re.data_g, re.data_under, re.title, start_date, end_date, re.namey, $('#type').val());
         myChart.setOption(option);
       }
     }else{
@@ -205,13 +206,25 @@ function reload_graft() {
     reload_graft();
   });
 }
-function setOptionCharts(datas, data_under, title, start_date, end_date, namey) {
+function setOptionCharts(datas, data_under, title, start_date, end_date, namey, type) {
+  var show_under = true;
+  var height_set = 290;
+  if(type == 4){
+    show_under = false;
+  }
+  if(type == 8){
+    height_set = 270;
+  }
   if(start_date == end_date){
     var name_date = start_date;
   }else{
     var name_date = start_date+" ถึง "+end_date;
+    if(type == 1 || type == 4 || type == 5 || type == 6 || type == 7 || type == 9 ||  type == 10){
+      show_under = false;
+    }
   }
   option = {
+    height: height_set,
     title: {
       text: title,
       subtext :"ข้อมูลวันที่ "+name_date,
@@ -232,17 +245,34 @@ function setOptionCharts(datas, data_under, title, start_date, end_date, namey) 
         fontFamily: fontsty
       },
       formatter: function (params) {
-
-        if(params.seriesName == null){
-          html = "ระดับค่ามาตราฐาน : "+params.value;
+        if(type == 2 || type == 3 || type == 11 || type == 12){
+          if(params.seriesName == null){
+            html = "ระดับค่ามาตราฐาน : "+params.value;
+          }else{
+            html = params.seriesName+"<br />วันที่ "+params.name+"<br />ระดับค่ามลพิษ : "+params.value;
+          }
         }else{
-          html = params.seriesName+"<br />"+params.name+"<br />ระดับค่ามลพิษ : "+params.value;
+          if(params.seriesName == null){
+            html = "ระดับค่ามาตราฐาน : "+params.value;
+          }else{
+            html = params.seriesName+"<br />"+params.name+"<br />ระดับค่ามลพิษ : "+params.value;
+          }
         }
+
         return html;
       }
     },
+    toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true,
+            title: 'บันทึกรูปภาพ'
+          }
+        }
+    },
     xAxis: {
-      show: false,
+      show: show_under,
       type: 'category',
       data: data_under,
       axisLabel: {
@@ -255,8 +285,8 @@ function setOptionCharts(datas, data_under, title, start_date, end_date, namey) 
       }
     },
     yAxis: {
-      type : 'value',
       name: namey,
+      type : 'value',
       nameLocation: 'middle',
       nameGap: 50,
       nameTextStyle: {
@@ -269,7 +299,8 @@ function setOptionCharts(datas, data_under, title, start_date, end_date, namey) 
           fontSize : 14,
           fontFamily: fontsty
         }
-      }
+      },
+      axisLine: { onZero: false }
     },
     legend: {
       show: 'true',

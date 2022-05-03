@@ -1,15 +1,15 @@
 <?php
 function getcolorgreen()
 {
-  return "rgb(65, 158, 0)";
+  return "rgb(145 204 117)";
 }
 function getcoloror()
 {
-  return "rgb(244, 163, 56)";
+  return "rgb(250 200 88)";
 }
 function getcolorblue()
 {
-  return "rgb(0, 194, 207)";
+  return "rgb(84 112 198)";
 }
 function getcolorred()
 {
@@ -57,6 +57,18 @@ function DateThai($strDate, $type = 0)
     }
   }elseif($type == 11){
     $datas = "$strHour:$strMinute";
+  }elseif($type == 99){
+    $datas = "$strHour:$strMinute";
+  }elseif($type == 98){
+    $tempDate = explode(" ", $strDate);
+    $strDate = $tempDate[0];
+    if(isset($tempDate[1])){
+      $datas = $tempDate[1].":00";
+    }else{
+      $datas = "$strDay $strMonthThai $strYear";
+    }
+  }elseif($type == 97){
+    $datas = "$strDay";
   }else{
     $datas = "$strDay $strMonthThai $strYear $strHour:$strMinute";
   }

@@ -47,7 +47,13 @@ class ResultController extends Controller
             $type = 10;
           }else{
             $limit = 80;
-            $type = 10;
+            $type = 99;
+          }
+          if($request->type == 10 || $request->type == 9){
+            $type = 98;
+          }
+          if($request->type == 11 || $request->type == 12){
+            $type = 97;
           }
           $graft = $this->formatGraft1($allData, $limit, $type, $request->type);
           $graft["title"] = $getnameid[$request->id]." ".$getnamemain[$request->type];
@@ -55,7 +61,7 @@ class ResultController extends Controller
           $graft = $this->formatGraft2($allData, 70);
           $graft["title"] = $getnameid[$request->id]." ".$getnamemain[$request->type];
         }elseif(in_array($request->type, $col5)){
-          $graft = $this->formatGraft4($allData, 5, 3, $request->type);
+          $graft = $this->formatGraft4($allData, 5, 98, $request->type);
           $graft["title"] = $getnameid[$request->id]." ".$getnamemain[$request->type];
         }elseif($request->type == 8){
           $graft = $this->formatGraft5($allData, 5, 0, $request->type);
@@ -231,7 +237,7 @@ class ResultController extends Controller
       $data_LMax = [];
       $data_limit = [];
       foreach ($allData as $key => $value) {
-        array_push($data_date, DateThai($value->f1, 1));
+        array_push($data_date, DateThai($value->f1, 97));
         array_push($data_LAEQ, $value->f2);
         array_push($data_LMax, $value->f3);
         array_push($data_limit, $limit);
@@ -252,7 +258,7 @@ class ResultController extends Controller
       $data_LAEQ = [];
       $data_limit = [];
       foreach ($allData as $key => $value) {
-        array_push($data_date, DateThai($value->f1, 1));
+        array_push($data_date, DateThai($value->f1, 97));
         array_push($data_LAEQ, $value->f2);
         array_push($data_limit, $limit);
       }
