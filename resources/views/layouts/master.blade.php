@@ -94,8 +94,8 @@
     <script src="{{ asset('bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.th.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('js/aos.js') }}"></script>
-    <script src="{{ asset('js/master.js') }}"></script>
     <script src="https://api.longdo.com/map/?key=68a2e7ba828c715b21b16ed97efd0f1b"></script>
+    <script src="{{ asset('js/master.js') }}"></script>
     <script type="text/javascript">
       $(document).ready(function() {
         $(".export_btn").click(function(event) {
@@ -115,24 +115,6 @@
             window.open(link, '_blank');
           }
         });
-        var map;
-        var marker1 = new longdo.Marker({ lon: 100.56, lat: 13.74 },
-        {
-          title: 'Marker',
-          icon: {
-            url: 'https://map.longdo.com/mmmap/images/pin_mark.png',
-            offset: { x: 12, y: 45 }
-          }
-        });
-        var popup3 = new longdo.Popup({ lon: 100.56, lat: 13.74 },
-        {
-          html: '<div style="background: #eeeeff; padding:15px 15px;">TESTsss</div>',
-        });
-        map = new longdo.Map({
-          placeholder: document.getElementById('result')
-        });
-        map.Overlays.add(marker1);
-        map.Overlays.add(popup3);
       });
     </script>
   </body>

@@ -42,7 +42,80 @@ var table = $('#datatables').DataTable({
     "lengthMenu": [[20, 50, 100, 200], [20, 50, 100, "ทั้งหมด"]],
     "ordering": true
 });
+function reloadmap(id) {
+  id = 5;
+  $("#result").html('<h1><i class="fas fa-spinner fa-spin"></i> กำลังดาวน์โหลดข้อมูลแมพ</h1>');
+  $(".main_img").hide();
+  $("#img"+id).show();
+  $.ajax({
+    url: $("#url_load_map").val(),
+    type: 'GET',
+    dataType: 'json',
+    data: {
+      id: id
+    }
+  })
+  .done(function(re) {
+    if(id == 1){
+      vlon = 13.744362;
+      vlat = 100.547246;
+    }else if(id == 2){
+      vlon = 13.745743;
+      vlat = 100.546230;
+    }else if(id == 3){
+      vlon = 13.745532934691482;
+      vlat = 100.54558968917357;
+    }else if(id == 4){
+      vlon = 13.744633148421215;
+      vlat = 100.54803376823888;
+    }else{
+      vlon = 13.745282041186725;
+      vlat = 100.54840839143655;
+    }
+    var map;
+    map = new longdo.Map({
+      placeholder: document.getElementById('result')
+    });
+    if(id == 3 || id == 4 || id == 5){
+      html = 'ค่าตรวจวัด ณ วันที่ '+re.lasttime+'<br /><br />'+
+      '<b>เสียง</b><br />'+
+      'LAeq '+re.sound_1hr.f2+' dB, LMax '+re.sound_1hr.f3+' dB, L90 '+re.sound_1hr.f4+' dB<br /><br />'+
+      '<b>ฝุ่น</b><br />'+
+      'PM 2.5 '+re.pm25_1hr.f2+' ug/m3, PM 10 '+re.pm10_1hr.f2+' ug/m3';
+      height = 150;
+    }else{
+      html = 'ค่าตรวจวัด ณ วันที่ '+re.lasttime+'<br /><br />'+
+      '<b>เสียง</b><br />'+
+      'LAeq '+re.sound_1hr.f2+' dB, LMax '+re.sound_1hr.f3+' dB, L90 '+re.sound_1hr.f4+' dB<br /><br />'+
+      '<b>สั่นสะเทือน</b><br />'+
+      'Vibration X '+re.vibration_x1hr.f4+' mm/s, Frequency X '+re.vibration_x1hr.f2+' Hz<br />'+
+      'Vibration Y '+re.vibration_y1hr.f4+' mm/s, Frequency Y '+re.vibration_y1hr.f2+' Hz<br />'+
+      'Vibration Z '+re.vibration_z1hr.f4+' mm/s, Frequency Z '+re.vibration_z1hr.f2+' Hz<br /><br />'+
+      '<b>ฝุ่น</b><br />'+
+      'PM 2.5 '+re.pm25_1hr.f2+' ug/m3, PM 10 '+re.pm10_1hr.f2+' ug/m3';
+      height = 200;
+    }
+    var marker1 = new longdo.Marker({ lon: vlat, lat: vlon });
+    var popup2 = new longdo.Popup({ lon: vlat, lat: vlon },
+      {
+        title: re.name,
+        detail: html,
+        size: { width: 350, height: height },
+        closable: false
+      });
+    map.Overlays.add(marker1);
+    map.Overlays.add(popup2);
+    map.zoom(15, false);
+    map.zoomRange({ min:15, max:20 });
+  })
+  .fail(function() {
+    id = $("#id").val();
+    reloadmap(id);
+  });
+}
 $(document).ready(function() {
+  id = $("#id").val();
+  reloadmap(id);
   $('.datepicker').change(function(event) {
     $("#export_start_date").val($("#start_date").val());
     $("#export_end_date").val($("#end_date").val());
@@ -63,6 +136,7 @@ $(document).ready(function() {
   table.columns( [ 4,5,6,7,8,9,10,11,12 ] ).visible( false );
   $(".selectmain").change(function(event) {
     id = $(this).val();
+    reloadmap(id);
     select1 = $(".select1").val();
     if(id == 3 || id == 4 || id == 5){
       $(".select1 option[value=5]").hide();

@@ -11,6 +11,15 @@ use Hash;
 
 class ResultController extends Controller
 {
+    public function getMap(Request $request)
+    {
+      $allDatas = $this->getData_all_parametor($request->id);
+      $lasttime = DateThai($allDatas["sound_1hr"]->f1);
+      $allDatas["lasttime"] = $lasttime;
+      $getnameid = getnameid();
+      $allDatas["name"] = $getnameid[$request->id];
+      return json_encode($allDatas);
+    }
     public function export(Request $request)
     {
         $getnameid = getnameid();
@@ -105,6 +114,72 @@ class ResultController extends Controller
         $data_format =["status" => 0];
       }
       return json_encode($data_format);
+    }
+    public function getData_all_parametor($id)
+    {
+      $start_date = date("Y-m-d");
+      $end_date = date("Y-m-d");
+      $fsort = "f1";
+      $sortBy = "desc";
+      if($id == 1){
+        $tablename = "ce_sound_actual";
+        $tablename1 = "ce_vibrationconverted";
+        $tablename2 = "ce_vibration_total";
+        $tablename3 = "view005";
+      }elseif($id == 2){
+        $tablename = "nailert_sound";
+        $tablename1 = "nailert_vibrationconverted";
+        $tablename2 = "nailert_vibration_total";
+        $tablename3 = "view006";
+      }elseif($id == 3){
+        $tablename = "newhouse_sound_actual";
+        $tablename1 = "newhouse_vibrationconverted";
+        $tablename2 = "newhouse_vibration_total";
+        $tablename3 = "view007";
+      }elseif($id == 4){
+        $tablename = "sivatel_sound";
+        $tablename1 = "sivatel_vibrationconverted";
+        $tablename2 = "sivatel_vibration_total";
+        $tablename3 = "view004";
+      }elseif($id == 5){
+        $tablename = "swiss_sound";
+        $tablename1 = "swiss_vibrationconverted";
+        $tablename2 = "swiss_vibration_total";
+        $tablename3 = "view003";
+      }
+      $sql = query_ce_sound_1hr($start_date, $end_date, $fsort, $sortBy, $tablename);
+      $sound_1hr = DB::connection('mysql1')->select( DB::raw($sql) );
+      $sound_1hr = collect($sound_1hr)->first();
+      if($id == 1 || $id == 2){
+        $sql = query_ce_vibration_x1hr($start_date, $end_date, $fsort, $sortBy, $tablename1, $tablename2);
+        $vibration_x1hr = DB::connection('mysql1')->select( DB::raw($sql) );
+        $vibration_x1hr = collect($vibration_x1hr)->first();
+        $sql = query_ce_vibration_y1hr($start_date, $end_date, $fsort, $sortBy, $tablename1, $tablename2);
+        $vibration_y1hr = DB::connection('mysql1')->select( DB::raw($sql) );
+        $vibration_y1hr = collect($vibration_y1hr)->first();
+        $sql = query_ce_vibration_z1hr($start_date, $end_date, $fsort, $sortBy, $tablename1, $tablename2);
+        $vibration_z1hr = DB::connection('mysql1')->select( DB::raw($sql) );
+        $vibration_z1hr = collect($vibration_z1hr)->first();
+      }
+      $sql = query_ce_pm25_1hr($start_date, $end_date, $fsort, $sortBy, $tablename3);
+      $pm25_1hr = DB::connection('mysql1')->select( DB::raw($sql) );
+      $pm25_1hr = collect($pm25_1hr)->first();
+      $sql = query_ce_pm10_1hr($start_date, $end_date, $fsort, $sortBy, $tablename3);
+      $pm10_1hr = DB::connection('mysql1')->select( DB::raw($sql) );
+      $pm10_1hr = collect($pm10_1hr)->first();
+      if($id == 1 || $id == 2){
+        $data = ["sound_1hr" => $sound_1hr,
+        "vibration_x1hr" => $vibration_x1hr,
+        "vibration_y1hr" => $vibration_y1hr,
+        "vibration_z1hr" => $vibration_z1hr,
+        "pm25_1hr" => $pm25_1hr,
+        "pm10_1hr" => $pm10_1hr];
+      }else{
+        $data = ["sound_1hr" => $sound_1hr,
+        "pm25_1hr" => $pm25_1hr,
+        "pm10_1hr" => $pm10_1hr];
+      }
+      return $data;
     }
     public function getData($request)
     {

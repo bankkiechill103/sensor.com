@@ -17,4 +17,5 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('get-data-g', [ResultController::class, 'getDataG'])->name('getdatag');
 Route::get('get-data-t', [ResultController::class, 'getDataT'])->name('getdatat');
+Route::get('get-map', [ResultController::class, 'getMap'])->name('getmap');
 Route::get('exports/{id}/{type}/{start_date}/{end_date}', [ResultController::class, 'export'])->name('export');
